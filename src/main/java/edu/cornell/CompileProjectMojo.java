@@ -41,7 +41,7 @@ public class CompileProjectMojo extends BaseMojo {
     @Override
     public void execute() throws MojoExecutionException {
         super.execute();
-        getLog().info("Compiling project without block tests");
+        getLog().info("Compiling project without block/inline tests");
 
         File backupPath = Paths.get(outputDir.getAbsolutePath() + "-backup").toFile();
         try {
@@ -69,14 +69,14 @@ public class CompileProjectMojo extends BaseMojo {
         }
 
         if (!autoCompile) {
-            getLog().info("Block tests are removed. Please compile the project manually then run [mvn sit-runner:restore] to restore the block tests.");
+            getLog().info("Block/Inline tests are removed. Please compile the project manually then run [mvn sit-runner:restore] to restore the block/inline tests.");
             return;
         }
 
         compile();
 
         if (!autoRestore) {
-            getLog().info("Block tests are removed and project is compiled. Please run [mvn sit-runner:restore] to restore the block tests.");
+            getLog().info("Block/Inline tests are removed and project is compiled. Please run [mvn sit-runner:restore] to restore the block/inline tests.");
             return;
         }
 
@@ -121,7 +121,7 @@ public class CompileProjectMojo extends BaseMojo {
                         .filter(p -> p.toString().endsWith(JAVA_SRC_EXTENSION))
                         .filter(p -> {
                             try {
-                                return Files.readAllLines(p).toString().contains("blocktest(") || Files.readAllLines(p).toString().contains("lambdatest(");
+                                return Files.readAllLines(p).toString().contains("blocktest(") || Files.readAllLines(p).toString().contains("lambdatest(") || Files.readAllLines(p).toString().contains("itest(");
                             } catch (IOException ex) {
                                 return false;
                             }
