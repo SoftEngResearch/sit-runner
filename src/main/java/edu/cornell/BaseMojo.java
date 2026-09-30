@@ -34,6 +34,9 @@ public class BaseMojo extends AbstractMojo implements Constants {
     @Parameter(property = "blockTestOnly", defaultValue = "false")
     protected boolean blockTestOnly;
 
+    @Parameter(property = "isolated", defaultValue = "false")
+    protected boolean isolated;
+
     protected String depsFile;
     protected String itestSrcDir;
     protected String itestBinDir;
